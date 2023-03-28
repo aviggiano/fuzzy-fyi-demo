@@ -15,5 +15,4 @@ jobs:
       - uses: actions/checkout@v3
       - name: Create job 
         run: |
-          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-          curl -XPOST -H 'Content-Type: application/json' https://app.fuzzy.fyi/api/job --data '{"projectId":"${{ secrets.FUZZY_FYI_PROJECT_ID }}","templateId":"${{ secrets.FUZZY_FYI_TEMPLATE_ID }}","ref":"${{ github.head_ref || github.ref_name }}","pullRequestNumber":"$PR_NUMBER"}'
+          curl -XPOST -H 'Content-Type: application/json' https://app.fuzzy.fyi/api/job --data '{"projectId":"${{ secrets.FUZZY_FYI_PROJECT_ID }}","templateId":"${{ secrets.FUZZY_FYI_TEMPLATE_ID }}","ref":"${{ github.head_ref || github.ref_name }}","pullRequestNumber":"${{ github.event.number }}"}'
