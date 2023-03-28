@@ -1,0 +1,19 @@
+name: Push
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  push:
+    branches:
+      - main
+
+jobs:
+  fuzzy-fyi:
+    name: Run fuzz tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create job 
+        run: |
+          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          curl -XPOST https://api.fuzzy.fyi/api/job --data '{"projectId":"${{ secrets.FUZZY_FYI_PROJECT_ID }}","templateId":"${{ secrets.FUZZY_FYI_TEMPLATE_ID }}","ref":"${{ github.head_ref || github.ref_name }}","pullRequestNumber":"$PR_NUMBER"}'
