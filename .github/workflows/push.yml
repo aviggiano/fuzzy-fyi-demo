@@ -15,4 +15,4 @@ jobs:
       - uses: actions/checkout@v3
       - name: Create job 
         run: |
-          curl -XPOST -H 'Content-Type: application/json' https://app.fuzzy.fyi/api/job --data '{"templateId":"${{ secrets.FUZZY_FYI_TEMPLATE_ID }}","ref":"${{ github.head_ref || github.ref_name }}","pullRequestNumber":"${{ github.event.number }}"}'
+          curl -XPOST -H 'Content-Type: application/json' -H 'x-api-key: ${{ secrets.FUZZY_FYI_API_KEY }}' https://app.fuzzy.fyi/api/job --data '{"templateId":"${{ secrets.FUZZY_FYI_TEMPLATE_ID }}","ref":"${{ github.head_ref || github.ref_name }}","pullRequestNumber":"${{ github.event.number }}"}'
